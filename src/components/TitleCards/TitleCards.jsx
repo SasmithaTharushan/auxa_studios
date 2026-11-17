@@ -1,49 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './TitleCards.css'
-import cards_data from '../../assets/cards/Cards_data'
 import { Link } from 'react-router-dom'
+import { tmdbFetch } from '../../tmdb'
 
-const TitleCards = ({title, category}) => {
-  const[apiData, setApiData] = useState([]);
-  const cardsRef = useRef();
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZTZlN2VhNmE1NTQ1ZTMwODMxMGE4ZjdjNzE4NWUwMSIsIm5iZiI6MTc0MzAwNjk0OS4zNjcsInN1YiI6IjY3ZTQyY2U1ZWM5OGJmMGEwZDc2MWQ5MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xI6pbDzAR4N6KmX2-t02R1oknQMCqnuhDzpeYpCee7w'
-    }
-  };
-  
-  
-
-  const handleWheel = (event) => {
-    event.preventDefault();  // Fixed: added parentheses
-    cardsRef.current.scrollLeft += event.deltaY;
-  }
+const TitleCards = ({ title, category, id }) => {
+  const [apiData, setApiData] = useState([])
+  const cardsRef = useRef()
 
   useEffect(() => {
+    const el = cardsRef.current
+    const handleWheel = (event) => {
+      event.preventDefault()
+      el.scrollLeft += event.deltaY
+    }
+    el.addEventListener('wheel', handleWheel, { passive: false })
+    return () => el.removeEventListener('wheel', handleWheel)
+  }, [])
 
-    fetch(`https://api.themoviedb.org/3/movie/${category?category:"now_playing"}?language=en-US&page=1`, options)
-    .then(res => res.json())
-    .then(res => setApiData(res.results))
-    .catch(err => console.error(err));
-
-    cardsRef.current.addEventListener('wheel', handleWheel);  // Fixed: corrected spelling
-  }, []);
+  useEffect(() => {
+    tmdbFetch(`/movie/${category ? category : 'now_playing'}?language=en-US&page=1`)
+      .then((res) => setApiData(res.results || []))
+      .catch((err) => console.error(err))
+  }, [category])
 
   return (
-    <div className='title-cards'>
-      <h2>{title?title:"Popular on Auxa Studios"}</h2>
+    <div className='title-cards' id={id}>
+      <h2>{title ? title : 'Popular on Auxa Studios'}</h2>
       <div className='card-list' ref={cardsRef}>
-        {apiData.map((card, index) => {
-          return (
-            <Link to={`/player/${card.id}`} className="card" key={index}>
-              <img src={`https://image.tmdb.org/t/p/w500`+card.backdrop_path} alt="" />
+        {apiData
+          .filter((card) => card.backdrop_path)
+          .map((card) => (
+            <Link to={`/player/${card.id}`} className='card' key={card.id}>
+              <img src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
               <p>{card.original_title}</p>
             </Link>
-          )
-        })}
+          ))}
       </div>
     </div>
   )

@@ -1,6 +1,8 @@
 .login{
     height: 100vh;
-    background-image: linear-gradient(#0000007e,#0000007e) url(/background_banner.jpg);
+    background: linear-gradient(#0000007e,#0000007e), url(/background_banner.jpg);
+    background-size: cover;
+    background-position: center;
     padding: 20px 8%;
 
 }
@@ -55,7 +57,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #b3bb3b;
+    color: #b3b3b3;
     font-size: 14px;
 }
 .remember-me{
@@ -74,7 +76,7 @@
 .form-switch span{
     margin-left: 6px;
     color: #fff;
-    font-size: 500;
+    font-weight: 500;
     cursor: pointer;
 }
 

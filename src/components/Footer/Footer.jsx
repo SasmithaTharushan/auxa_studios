@@ -28,7 +28,7 @@ const Footer = () => {
         <li>Cookie Preferences</li>
         <li>Contact Us</li>
       </ul>
-      <p className='copyright-text'> 2018-2025 Auxa, Inc.</p>
+      <p className='copyright-text'> © 2018-2026 Auxa, Inc.</p>
     </div>
   );
 };

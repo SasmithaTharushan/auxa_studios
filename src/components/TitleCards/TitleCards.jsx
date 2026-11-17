@@ -1,42 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import './TitleCards.css'
-import { Link } from 'react-router-dom'
-import { tmdbFetch } from '../../tmdb'
+import useTmdb from '../../hooks/useTmdb'
+import MovieCard from '../MovieCard/MovieCard'
+import { ChevronLeft, ChevronRight } from '../Icons/Icons'
 
-const TitleCards = ({ title, category, id }) => {
-  const [apiData, setApiData] = useState([])
-  const cardsRef = useRef()
+// A horizontal row of movies. Give either a TMDB movie `category`
+// (now_playing, popular, ...) or a full `path` to fetch from.
+const TitleCards = ({ title, category, path, id, movies }) => {
+  const listRef = useRef()
+  const url = movies ? null : path || `/movie/${category || 'now_playing'}?language=en-US&page=1`
+  const { data, loading, error, reload } = useTmdb(url)
 
-  useEffect(() => {
-    const el = cardsRef.current
-    const handleWheel = (event) => {
-      event.preventDefault()
-      el.scrollLeft += event.deltaY
-    }
-    el.addEventListener('wheel', handleWheel, { passive: false })
-    return () => el.removeEventListener('wheel', handleWheel)
-  }, [])
+  const items = (movies || data?.results || []).filter((m) => m.backdrop_path || m.poster_path)
 
-  useEffect(() => {
-    tmdbFetch(`/movie/${category ? category : 'now_playing'}?language=en-US&page=1`)
-      .then((res) => setApiData(res.results || []))
-      .catch((err) => console.error(err))
-  }, [category])
+  const scroll = (dir) => {
+    const el = listRef.current
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
 
   return (
-    <div className='title-cards' id={id}>
-      <h2>{title ? title : 'Popular on Auxa Studios'}</h2>
-      <div className='card-list' ref={cardsRef}>
-        {apiData
-          .filter((card) => card.backdrop_path)
-          .map((card) => (
-            <Link to={`/player/${card.id}`} className='card' key={card.id}>
-              <img src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
-              <p>{card.original_title}</p>
-            </Link>
-          ))}
-      </div>
-    </div>
+    <section className='title-cards' id={id}>
+      <h2>{title || 'Popular on Auxa Studios'}</h2>
+      {error ? (
+        <div className='row-error'>
+          <p>We couldn&apos;t load this row.</p>
+          <button type='button' className='btn btn-ghost' onClick={reload}>Try again</button>
+        </div>
+      ) : (
+        <div className='row-wrap'>
+          <button type='button' className='row-arrow left' aria-label='Scroll left' onClick={() => scroll(-1)}>
+            <ChevronLeft />
+          </button>
+          <div className='card-list' ref={listRef}>
+            {loading
+              ? Array.from({ length: 8 }, (_, i) => <div key={i} className='skeleton card-skeleton' />)
+              : items.map((m) => <MovieCard key={m.id} movie={m} />)}
+          </div>
+          <button type='button' className='row-arrow right' aria-label='Scroll right' onClick={() => scroll(1)}>
+            <ChevronRight />
+          </button>
+        </div>
+      )}
+    </section>
   )
 }
 

@@ -1,0 +1,26 @@
+.browse-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.browse-head .page-title { margin: 0; }
+.sort-select { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.sort-select select {
+  background: var(--surface);
+  color: #fff;
+  border: 1px solid var(--surface-2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 14px;
+}
+.genre-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 20px; scrollbar-width: thin; }
+.genre-bar button {
+  flex: 0 0 auto;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-2);
+  background: var(--surface);
+  color: #cfcfd6;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.genre-bar button:hover { border-color: #555; color: #fff; }
+.genre-bar button.active { background: var(--accent); border-color: var(--accent); color: #fff; }

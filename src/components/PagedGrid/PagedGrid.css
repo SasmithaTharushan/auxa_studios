@@ -1,0 +1,10 @@
+.paged-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+}
+.grid-skeleton { aspect-ratio: 2 / 3; border-radius: var(--radius); }
+.load-more { display: flex; justify-content: center; margin-top: 32px; }
+@media (max-width: 500px) {
+  .paged-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}

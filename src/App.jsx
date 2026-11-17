@@ -7,6 +7,8 @@ import Details from './pages/Details/Details'
 import Search from './pages/Search/Search'
 import Browse from './pages/Browse/Browse'
 import MyList from './pages/MyList/MyList'
+import Free from './pages/Free/Free'
+import FreePlayer from './pages/Free/FreePlayer'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 const ScrollToTop = () => {
@@ -28,6 +30,8 @@ const App = () => {
           <Route path='/browse' element={<Browse />} />
           <Route path='/search' element={<Search />} />
           <Route path='/my-list' element={<MyList />} />
+          <Route path='/free' element={<Free />} />
+          <Route path='/free/:id' element={<FreePlayer />} />
           <Route path='/movie/:id' element={<Details />} />
           <Route path='/player/:id' element={<Player />} />
         </Route>

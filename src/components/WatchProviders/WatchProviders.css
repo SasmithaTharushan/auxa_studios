@@ -1,0 +1,19 @@
+.watch-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.watch-head h2 { margin: 0 !important; }
+.watch-head select {
+  background: var(--surface);
+  color: #fff;
+  border: 1px solid var(--surface-2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 13px;
+}
+.watch-groups { display: flex; flex-wrap: wrap; gap: 28px; }
+.watch-group h3 { font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 8px; }
+.watch-logos { display: flex; flex-wrap: wrap; gap: 10px; }
+.watch-logos a { display: block; transition: transform 0.2s; }
+.watch-logos a:hover { transform: scale(1.1); }
+.watch-logos img { width: 48px; height: 48px; border-radius: 10px; display: block; }
+.watch-none, .watch-credit { color: var(--muted); font-size: 13px; }
+.watch-credit { margin-top: 14px; font-size: 12px; }

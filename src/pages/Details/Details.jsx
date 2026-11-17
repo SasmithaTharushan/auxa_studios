@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import './Details.css'
 import NavBar from '../../components/NavBar/Navbar'
 import Footer from '../../components/Footer/Footer'
+import WatchProviders from '../../components/WatchProviders/WatchProviders'
 import TitleCards from '../../components/TitleCards/TitleCards'
 import useTmdb from '../../hooks/useTmdb'
 import { img, year, runtimeText } from '../../tmdb'
@@ -76,6 +77,7 @@ const Details = () => {
       </div>
 
       <div className='details-body'>
+        <section><WatchProviders movieId={m.id} /></section>
         {cast.length > 0 && (
           <section>
             <h2>Cast</h2>

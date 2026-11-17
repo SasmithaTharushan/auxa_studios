@@ -2,6 +2,7 @@ import './Home.css'
 import NavBar from '../../components/NavBar/Navbar'
 import Hero from '../../components/Hero/Hero'
 import TitleCards from '../../components/TitleCards/TitleCards'
+import FreeRow from '../../components/FreeRow/FreeRow'
 import Footer from '../../components/Footer/Footer'
 import { useList } from '../../context/ListContext'
 import { hasToken } from '../../tmdb'
@@ -21,6 +22,7 @@ const Home = () => {
       <Hero />
       <div className='more-cards'>
         {items.length > 0 && <TitleCards title='My List' movies={items} id='my-list' />}
+        <FreeRow id='free' />
         <TitleCards title='Trending This Week' path='/trending/movie/week?language=en-US' id='trending' />
         <TitleCards title='Blockbuster Movies' category='top_rated' id='blockbuster' />
         <TitleCards title='Only on Auxa Studios' category='popular' id='popular' />

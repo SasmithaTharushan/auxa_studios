@@ -67,6 +67,7 @@ const Navbar = () => {
   const links = [
     ['/', 'Home'],
     ['/browse', 'Browse'],
+    ['/free', 'Free Movies'],
     ['/my-list', 'My List'],
   ]
 
